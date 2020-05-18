@@ -33,6 +33,9 @@ import com.google.android.gms.vision.barcode.Barcode;
  */
 public class MainActivity extends Activity implements View.OnClickListener {
 
+    //database definition
+    DataBaseHelper dataBaseHelper;
+
     // use a compound button so either checkbox or switch widgets work.
     private CompoundButton autoFocus;
     private CompoundButton useFlash;
@@ -54,6 +57,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
 
         findViewById(R.id.read_barcode).setOnClickListener(this);
+
+        dataBaseHelper = new DataBaseHelper(this);
     }
 
     /**

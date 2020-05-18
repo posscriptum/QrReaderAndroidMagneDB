@@ -432,5 +432,9 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
     @Override
     public void onBarcodeDetected(Barcode barcode) {
         //do something with barcode data returned
+        Intent data = new Intent();
+        data.putExtra(BarcodeObject, barcode);
+        setResult(CommonStatusCodes.SUCCESS, data);
+        finish();
     }
 }
