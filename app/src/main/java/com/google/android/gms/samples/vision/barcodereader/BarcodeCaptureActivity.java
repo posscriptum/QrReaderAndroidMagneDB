@@ -334,6 +334,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
      */
     private boolean onTap(float rawX, float rawY) {
         // Find tap point in preview frame coordinates.
+        Log.d(TAG, "test");
         int[] location = new int[2];
         mGraphicOverlay.getLocationOnScreen(location);
         float x = (rawX - location[0]) / mGraphicOverlay.getWidthScaleFactor();
@@ -433,17 +434,11 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
     @Override
     public void onBarcodeDetected(Barcode barcode) {
         //do something with barcode data returned
-        for (BarcodeGraphic graphic : mGraphicOverlay.getGraphics()) {
-            Barcode barcodeSearchedFirst = graphic.getBarcode();
+        Log.d(TAG, "code detected.");
 
-            // checking right barcode
-            if (barcodeSearchedFirst != null) {
-                // read is successfully - send intent to main activity
-                Intent data = new Intent();
-                data.putExtra(BarcodeObject, barcodeSearchedFirst);
-                setResult(CommonStatusCodes.SUCCESS, data);
-                finish();
-            }
-        }
+        Intent data = new Intent();
+        data.putExtra(BarcodeObject, barcode);
+        setResult(CommonStatusCodes.SUCCESS, data);
+        finish();
     }
 }
