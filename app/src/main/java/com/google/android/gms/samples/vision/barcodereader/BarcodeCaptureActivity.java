@@ -358,6 +358,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
             }
         }
 
+        // передается значение баркода обратно в первую активность
         if (best != null) {
             Intent data = new Intent();
             data.putExtra(BarcodeObject, best);
@@ -432,5 +433,17 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
     @Override
     public void onBarcodeDetected(Barcode barcode) {
         //do something with barcode data returned
+        for (BarcodeGraphic graphic : mGraphicOverlay.getGraphics()) {
+            Barcode barcodeSearchedFirst = graphic.getBarcode();
+
+            // checking right barcode
+            if (barcodeSearchedFirst != null) {
+                // read is successfully - send intent to main activity
+                Intent data = new Intent();
+                data.putExtra(BarcodeObject, barcodeSearchedFirst);
+                setResult(CommonStatusCodes.SUCCESS, data);
+                finish();
+            }
+        }
     }
 }
