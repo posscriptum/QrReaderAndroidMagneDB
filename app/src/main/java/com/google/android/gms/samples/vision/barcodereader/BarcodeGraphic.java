@@ -91,6 +91,7 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
         }
 
         // Draws the bounding box around the barcode.
+        //Нарисовать квадрат вокруг баркода
         RectF rect = new RectF(barcode.getBoundingBox());
         rect.left = translateX(rect.left);
         rect.top = translateY(rect.top);
@@ -100,5 +101,8 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
 
         // Draws a label at the bottom of the barcode indicate the barcode value that was detected.
         canvas.drawText(barcode.rawValue, rect.left, rect.bottom, mTextPaint);
+
+        // Отсюда нужно вызывать метод обработки баркода, такой как BarcodeCaptureActivity.onTap()
+
     }
 }
