@@ -54,7 +54,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + EMPLOYEE + "(" + KEY_ID
-                + " integer primary key," + KEY_WORKER_ID + " text," + KEY_FIRST_NAME_EMPLOYEE + " text" + ")");
+                + " integer primary key," + KEY_WORKER_ID + " text," + KEY_FIRST_NAME_EMPLOYEE
+                + " text," + KEY_SECOND_NAME_EMPLOYEE + " text,"+ KEY_THIRD_NAME_EMPLOYEE + " text,"
+                + KEY_PHOTO_EMPLOYEE + " text" + ")");
+
+        db.execSQL("create table " + SHIFT + "(" + KEY_ID
+                + " integer primary key," +  KEY_SHIFT_NAME + " text," + KEY_DESCRIPTION + " text" + ")");
+
+        db.execSQL("create table " + CHECKPOINT + "(" + KEY_ID
+                + " integer primary key," + KEY_LINE_NUMBER_ID + " text," + KEY_CHECKPOINT_NAME + " text" + ")");
     }
 
     @Override
