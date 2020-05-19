@@ -12,4 +12,12 @@
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
+
+    // Employees array
+    <string-array name="Employees">
+        <item>981724532 Rumiantsev Dmitriy Sergeevich</item>
+        <item>981274598 Yakovlev Igor Mihaylovich</item>
+        <item>235987230 Ivanov Ivan Ivanovich</item>
+        <item>549068720 Petrov Petr Petrovich</item>
+    </string-array>
 </resources>
