@@ -53,6 +53,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        //create tables into database
         db.execSQL("create table " + EMPLOYEE + "(" + KEY_ID
                 + " integer primary key," + KEY_WORKER_ID + " text," + KEY_FIRST_NAME_EMPLOYEE
                 + " text," + KEY_SECOND_NAME_EMPLOYEE + " text,"+ KEY_THIRD_NAME_EMPLOYEE + " text,"
@@ -62,7 +64,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + " integer primary key," +  KEY_SHIFT_NAME + " text," + KEY_DESCRIPTION + " text" + ")");
 
         db.execSQL("create table " + CHECKPOINT + "(" + KEY_ID
-                + " integer primary key," + KEY_LINE_NUMBER_ID + " text," + KEY_CHECKPOINT_NAME + " text" + ")");
+                + " integer primary key," + KEY_LINE_NUMBER_ID + " text," + KEY_CHECKPOINT_NAME + " text," + KEY_DESCRIPTION + " text" + ")");
+
+        db.execSQL("create table " + LINE + "(" + KEY_ID
+                + " integer primary key," + KEY_LINE_NAME + " text," + KEY_SUBMASHINE + " text," + KEY_COMMENTS + " text" + ")");
+
+        db.execSQL("create table " + EVENTS + "(" + KEY_ID
+                + " integer primary key," + KEY_DATA + " text," + KEY_TIME + " text," + KEY_SHIFT_ID + " text,"
+                + KEY_EMPLOYEE_ID + " text," + KEY_CHECKPOINT_ID + " text," + KEY_CHECKED + " text," + KEY_EVENT_COMMENT + " text," +
+                KEY_EVENT_PHOTO + " text" +")");
     }
 
     @Override
