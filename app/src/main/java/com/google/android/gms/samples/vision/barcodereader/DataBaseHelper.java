@@ -1,11 +1,18 @@
 package com.google.android.gms.samples.vision.barcodereader;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
+
+    private Context context;
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "QrReaderDB";
@@ -73,14 +80,37 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + " integer primary key," + KEY_DATA + " text," + KEY_TIME + " text," + KEY_SHIFT_ID + " text,"
                 + KEY_EMPLOYEE_ID + " text," + KEY_CHECKPOINT_ID + " text," + KEY_CHECKED + " text," + KEY_EVENT_COMMENT + " text," +
                 KEY_EVENT_PHOTO + " text" +")");
+
+        //fill dbatbase
+        fillDatabase(db);
     }
 
+    private void fillDatabase(SQLiteDatabase db) {
+        String[] Employees = context.getResources().getStringArray(R.array.Employees);
+        for (String str: Employees) {
+            String[] onSplit = str.split(" ");
+
+            //insert content to db table employee
+            ContentValues newValues = new ContentValues();
+            newValues.put(KEY_WORKER_ID, onSplit[0]);
+            newValues.put(KEY_FIRST_NAME_EMPLOYEE, onSplit[1]);
+            newValues.put(KEY_SECOND_NAME_EMPLOYEE, onSplit[2]);
+            newValues.put(KEY_THIRD_NAME_EMPLOYEE, onSplit[3]);
+            db.insert(EMPLOYEE, null, newValues);
+        }
+    }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //delete tables from database
         db.execSQL("drop table if exists " + EMPLOYEE);
+        db.execSQL("drop table if exists " + SHIFT);
+        db.execSQL("drop table if exists " + CHECKPOINT);
+        db.execSQL("drop table if exists " + LINE);
+        db.execSQL("drop table if exists " + EVENTS);
 
+        //cerate tables again
         onCreate(db);
     }
 }
