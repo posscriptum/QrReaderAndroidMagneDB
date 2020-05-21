@@ -5,10 +5,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -54,7 +50,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String KEY_EVENT_PHOTO = "EventPhoto";
 
 
-    public DataBaseHelper(@Nullable Context context) {
+    public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

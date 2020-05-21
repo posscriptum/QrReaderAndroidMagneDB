@@ -19,13 +19,9 @@ package com.google.android.gms.samples.vision.barcodereader;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -34,23 +30,42 @@ import com.google.android.gms.vision.barcode.Barcode;
  * Main activity demonstrating how to pass extra parameters to an activity that
  * reads barcodes.
  */
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivityNew extends ListFragment {
 
     //database definition
     DataBaseHelper dataBaseHelper;
     SQLiteDatabase db;
-    private DatabaseAdapterEmployee adapter = new DatabaseAdapterEmployee(this);
+    private DatabaseAdapterEmployee adapter = new DatabaseAdapterEmployee(this.getContext());
+
+    //@RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //setContentView(R.layout.activity_main);
+
+        //get data from DB
+        adapter.open();
+        String[] data = new String[adapter.getUsers().size()];
+        adapter.getUsers().toArray(data);
+
+        ArrayAdapter<String> adapterString = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, data);
+        setListAdapter(adapterString);
+
+        adapter.close();
+    }
+
 
     // use a compound button so either checkbox or switch widgets work.
-    private CompoundButton autoFocus;
+    /*private CompoundButton autoFocus;
     private CompoundButton useFlash;
     private TextView statusMessage;
-    private TextView barcodeValue;
+    private TextView barcodeValue;*/
 
     private static final int RC_BARCODE_CAPTURE = 9001;
     private static final String TAG = "BarcodeMain";
 
-    @Override
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -64,21 +79,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.read_barcode).setOnClickListener(this);
 
         dataBaseHelper = new DataBaseHelper(this);
-
-        Log.d(TAG, "test");
-        //get data from DB
-        /*adapter.open();
-        Log.d(TAG, "test1");
-        String[] data = new String[adapter.getUsers().size()];
-        adapter.getUsers().toArray(data);
-        Log.d(TAG, data[0]);
-
-        ListView countriesList = (ListView) findViewById(R.id.listFragment);
-
-        ArrayAdapter<String> adapterList = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
-        countriesList.setAdapter(adapterList);
-
-        adapter.close();*/
     }
 
     /**
@@ -86,7 +86,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
      *
      * @param v The view that was clicked.
      */
-    @Override
+    /*@Override
     public void onClick(View v) {
         if (v.getId() == R.id.read_barcode) {
             // launch barcode activity.
@@ -122,21 +122,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
      * @see #setResult(int)
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RC_BARCODE_CAPTURE) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-                    statusMessage.setText(R.string.barcode_success);
-                    barcodeValue.setText(barcode.displayValue);
+                    //statusMessage.setText(R.string.barcode_success);
+                    //barcodeValue.setText(barcode.displayValue);
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
                 } else {
-                    statusMessage.setText(R.string.barcode_failure);
+                    //statusMessage.setText(R.string.barcode_failure);
                     Log.d(TAG, "No barcode captured, intent data is null");
                 }
             } else {
-                statusMessage.setText(String.format(getString(R.string.barcode_error),
-                        CommonStatusCodes.getStatusCodeString(resultCode)));
+                //statusMessage.setText(String.format(getString(R.string.barcode_error),
+                        //CommonStatusCodes.getStatusCodeString(resultCode)));
             }
         }
         else {

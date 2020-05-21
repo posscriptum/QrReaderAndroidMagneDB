@@ -17,15 +17,27 @@
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true" />
 
+    <ListView
+        android:id="@+id/listFragment"
+        android:name="com.google.android.gms.samples.vision.barcodereader.MainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@+id/status_message"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        tools:layout="@android:layout/list_content">
+    </ListView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/barcode_value"
-        android:layout_below="@+id/status_message"
+        android:layout_below="@+id/listFragment"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="10dp"
         android:layout_alignRight="@+id/status_message"
         android:layout_alignEnd="@+id/status_message" />
 
