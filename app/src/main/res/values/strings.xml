@@ -7,13 +7,15 @@
     <string name="title_activity_main">Barcode Reader Sample</string>
     <string name="barcode_header">Выбирете себя из списка</string>
     <string name="read_barcode">Read Barcode</string>
-    <string name="auto_focus">Auto Focus</string>
-    <string name="use_flash">Use Flash</string>
+    <string name="auto_focus">Автофокусировка</string>
+    <string name="use_flash">Подсветить вспышкой</string>
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
     <string name="Emploeeys">Сотрудники:</string>
     <string name="empty">Нечего отображать</string>
+    <string name="Lines">"Линии: "</string>
+    <string name="text_header_lines">Выбирете линию:</string>
 
     // Employees array
     <string-array name="Employees">

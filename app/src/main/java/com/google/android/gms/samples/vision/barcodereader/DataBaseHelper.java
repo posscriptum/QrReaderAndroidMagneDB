@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
+    private static final String TAG = "DataBaseHelper";
     private Context context;
 
     public static final int DATABASE_VERSION = 1;
@@ -52,11 +54,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        Log.d(TAG, "context");
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        Log.d(TAG, "on create DB");
         //create tables into database
         db.execSQL("create table " + EMPLOYEE + "(" + KEY_ID
                 + " integer primary key," + KEY_WORKER_ID + " text," + KEY_FIRST_NAME_EMPLOYEE
@@ -77,8 +82,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + KEY_EMPLOYEE_ID + " text," + KEY_CHECKPOINT_ID + " text," + KEY_CHECKED + " text," + KEY_EVENT_COMMENT + " text," +
                 KEY_EVENT_PHOTO + " text" +")");
 
-        //fill dbatbase
+        Log.d(TAG, "finish create db");
+        //fill database
         fillDatabase(db);
+        Log.d(TAG, "finish fill db");
     }
 
     private void fillDatabase(SQLiteDatabase db) {
@@ -93,6 +100,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             newValues.put(KEY_SECOND_NAME_EMPLOYEE, onSplit[2]);
             newValues.put(KEY_THIRD_NAME_EMPLOYEE, onSplit[3]);
             db.insert(EMPLOYEE, null, newValues);
+            Log.d(TAG, onSplit[1]);
         }
     }
 

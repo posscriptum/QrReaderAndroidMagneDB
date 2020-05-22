@@ -17,6 +17,7 @@
 package com.google.android.gms.samples.vision.barcodereader;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.app.Activity;
@@ -65,10 +66,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         dataBaseHelper = new DataBaseHelper(this);
 
-        Log.d(TAG, "test");
+        Log.d(TAG, "created DataBaseHelper");
+
+        //db = dataBaseHelper.getWritableDatabase();
+        //Log.d(TAG, "open db");
+
+        //String[] columns = new String[] {DataBaseHelper.KEY_WORKER_ID, DataBaseHelper.KEY_FIRST_NAME_EMPLOYEE,
+        //        DataBaseHelper.KEY_SECOND_NAME_EMPLOYEE, DataBaseHelper.KEY_THIRD_NAME_EMPLOYEE};
+        //Cursor cursor = db.query(DataBaseHelper.EMPLOYEE, columns, null, null, null, null, null);
+        //Log.d(TAG, "created cursor");
+
+
         //get data from DB
-        /*adapter.open();
-        Log.d(TAG, "test1");
+        adapter.open();
+        //Log.d(TAG, "test1");
         String[] data = new String[adapter.getUsers().size()];
         adapter.getUsers().toArray(data);
         Log.d(TAG, data[0]);
@@ -78,7 +89,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         ArrayAdapter<String> adapterList = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
         countriesList.setAdapter(adapterList);
 
-        adapter.close();*/
+        adapter.close();
     }
 
     /**
