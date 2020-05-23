@@ -12,8 +12,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/text_header_lines"
-        android:id="@+id/text_header_machines"
+        android:text="@string/text_header_submachines"
+        android:id="@+id/text_header_submachine"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/text_choosed_person"
+        android:layout_below="@+id/text_header_submachine"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/text_line"
+        android:layout_below="@+id/text_choosed_person"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
@@ -21,31 +48,34 @@
         android:gravity="center_horizontal" />
 
     <ListView
-        android:id="@+id/list_machines"
+        android:id="@+id/list_submachines"
         android:name="com.google.android.gms.samples.vision.barcodereader.MainActivity"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_below="@+id/text_header_machines"
+        android:layout_below="@+id/text_line"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         tools:layout="@android:layout/list_content">
     </ListView>
 
-    <Button
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/read_barcode"
-        android:id="@+id/read_barcode"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/barcode_value_sub"
+        android:layout_below="@+id/list_submachines"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/auto_focus"
-        android:id="@+id/auto_focus"
-        android:layout_below="@+id/list_machines"
+        android:id="@+id/auto_focus_sub"
+        android:layout_below="@+id/barcode_value_sub"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="66dp"
@@ -55,8 +85,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/use_flash"
-        android:id="@+id/use_flash"
-        android:layout_alignTop="@+id/auto_focus"
+        android:id="@+id/use_flash_sub"
+        android:layout_alignTop="@+id/auto_focus_sub"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:checked="false" />

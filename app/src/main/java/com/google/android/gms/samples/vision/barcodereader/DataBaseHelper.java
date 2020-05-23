@@ -12,7 +12,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DataBaseHelper";
     private Context context;
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "QrReaderDB";
     public static final String EMPLOYEE = "Employee";
     public static final String SHIFT = "Shift";
@@ -93,17 +93,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         for (String str: Employees) {
             String[] onSplit = str.split(" ");
 
-            //insert content to db table employee
+            //insert content employee to db table employee
             ContentValues newValues = new ContentValues();
             newValues.put(KEY_WORKER_ID, onSplit[0]);
             newValues.put(KEY_FIRST_NAME_EMPLOYEE, onSplit[1]);
             newValues.put(KEY_SECOND_NAME_EMPLOYEE, onSplit[2]);
             newValues.put(KEY_THIRD_NAME_EMPLOYEE, onSplit[3]);
             db.insert(EMPLOYEE, null, newValues);
-            Log.d(TAG, onSplit[1]);
+        }
+
+        String[] Lines = context.getResources().getStringArray(R.array.Lines);
+        for (String str: Lines) {
+            String[] onSplit = str.split(" ");
+
+            //insert content lines to db table employee
+            ContentValues newValues = new ContentValues();
+            newValues.put(KEY_LINE_NAME, onSplit[0]);
+            newValues.put(KEY_SUBMASHINE, onSplit[1]);
+            newValues.put(KEY_COMMENTS, "no comment yet");
+            db.insert(LINE, null, newValues);
         }
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -114,7 +124,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists " + LINE);
         db.execSQL("drop table if exists " + EVENTS);
 
-        //cerate tables again
+        //create tables again
         onCreate(db);
     }
+
 }

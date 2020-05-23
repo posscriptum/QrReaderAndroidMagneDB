@@ -5,7 +5,7 @@
     <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
     <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
     <string name="title_activity_main">Barcode Reader Sample</string>
-    <string name="barcode_header">Выбирете себя из списка</string>
+    <string name="barcode_header">Выберете себя из списка</string>
     <string name="read_barcode">Read Barcode</string>
     <string name="auto_focus">Автофокусировка</string>
     <string name="use_flash">Подсветить вспышкой</string>
@@ -15,13 +15,37 @@
     <string name="Emploeeys">Сотрудники:</string>
     <string name="empty">Нечего отображать</string>
     <string name="Lines">"Линии: "</string>
-    <string name="text_header_lines">Выбирете линию:</string>
+    <string name="text_header_lines">Выберете линию:</string>
+    <string name="text_header_submachines">Выберете машину</string>
 
     // Employees array
     <string-array name="Employees">
-        <item>981724532 Rumiantsev Dmitriy Sergeevich</item>
-        <item>981274598 Yakovlev Igor Mihaylovich</item>
-        <item>235987230 Ivanov Ivan Ivanovich</item>
-        <item>549068720 Petrov Petr Petrovich</item>
+        <item>98172 Румянцев Дмитрий Сергеевич</item>
+        <item>98127 Яковлев Игорь Михайлович</item>
+        <item>23598 Иванов Иван Иванович</item>
+        <item>54906 Петров Петр Петрович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+        <item>98475 Сидоров Сидор Сидорович</item>
+    </string-array>
+
+    // Lines array
+    <string-array name="Lines">
+        <item>TDM1000 Пресс1</item>
+        <item>TDM1000 Пресс2</item>
+        <item>TDM1000 Пресс3</item>
+        <item>TDM1000 Пресс4</item>
+        <item>TDM800 Пресс1</item>
+        <item>TDM800 Пресс2</item>
+        <item>TDM800 Пресс3</item>
+        <item>TDM800 Пресс4</item>
     </string-array>
 </resources>
