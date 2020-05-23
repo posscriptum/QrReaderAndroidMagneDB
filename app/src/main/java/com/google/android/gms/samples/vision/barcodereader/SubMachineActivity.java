@@ -1,5 +1,6 @@
 package com.google.android.gms.samples.vision.barcodereader;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
-public class SubMachineActivity extends AppCompatActivity {
+public class SubMachineActivity extends Activity {
 
     private static final String TAG = "SubMachineActivity: ";
     //database definition
