@@ -1,15 +1,20 @@
 package com.google.android.gms.samples.vision.barcodereader;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +33,7 @@ public class SubMachineActivity extends Activity {
     private CompoundButton useFlash;
     private TextView barcodeValue;
     private static final int RC_BARCODE_CAPTURE = 9001;
+    String[] data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +62,14 @@ public class SubMachineActivity extends Activity {
         //get data from DB
         adapter.open();
         //Log.d(TAG, "test1");
-        String[] data = new String[adapter.getSubmachine(line).size()];
+        data = new String[adapter.getSubmachine(line).size()];
         adapter.getSubmachine(line).toArray(data);
 
         //insert to listView
         ListView sumachinesList = (ListView) findViewById(R.id.list_submachines);
 
-        ArrayAdapter<String> adapterList = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
-        sumachinesList.setAdapter(adapterList);
+        //sumachinesList.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, R.id.text_view_submachine_item, data));
+        sumachinesList.setAdapter(new SubmachineAdapter(this, R.layout.list_item, data));
 
         adapter.close();
 
@@ -123,6 +129,30 @@ public class SubMachineActivity extends Activity {
         }
         else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    class SubmachineAdapter extends ArrayAdapter<String> {
+
+        public SubmachineAdapter(@NonNull Context context, int resource, @NonNull String[] objects) {
+            super(context, resource, objects);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            LayoutInflater inflater = getLayoutInflater();
+            View row = inflater.inflate(R.layout.list_item, parent, false);
+            TextView label = (TextView) row.findViewById(R.id.text_view_submachine_item);
+            label.setText(data[position]);
+            ImageView iconImageView = (ImageView) row.findViewById(R.id.image_view_icon);
+            // Если текст содержит кота, то выводим значок Льва (лев - это кот!)
+            if (position == 1){         //(data[position].equalsIgnoreCase("Лев")) {
+                iconImageView.setImageResource(R.drawable.icon_no);
+            } else {
+                iconImageView.setImageResource(R.drawable.icon_yes);
+            }
+            return row;
         }
     }
 }
