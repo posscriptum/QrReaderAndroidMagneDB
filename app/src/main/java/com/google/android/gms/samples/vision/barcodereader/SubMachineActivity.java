@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -86,7 +87,7 @@ public class SubMachineActivity extends Activity {
                 intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
                 intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
                 intent.putExtra("positionClick", position);
-                checkedSubmachine[position] = true;
+                //checkedSubmachine[position] = true;
                 intent.putExtra("checkedSubmachine", checkedSubmachine);
 
                 startActivityForResult(intent, RC_BARCODE_CAPTURE);
@@ -130,6 +131,10 @@ public class SubMachineActivity extends Activity {
                     //insert to listView
                     ListView sumachinesList = (ListView) findViewById(R.id.list_submachines);
                     sumachinesList.setAdapter(new SubmachineAdapter(this, R.layout.list_item, this.data));
+                    if(checkFinishWork(checkedSubmachine)){
+                        Button buttonFinish = (Button) findViewById(R.id.button_finish);
+                        buttonFinish.setVisibility(View.VISIBLE);
+                    }
 
                 } else {
                     Log.d(TAG, "No barcode captured, intent data is null");
@@ -141,6 +146,21 @@ public class SubMachineActivity extends Activity {
         else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private boolean checkFinishWork(boolean[] checkedSubmachine) {
+        boolean result = true;
+        for(boolean bool: checkedSubmachine){
+            result = bool && result;
+        }
+        return  result;
+    }
+
+    public void goToMainActivity(View view) {
+        Intent intent = new Intent(view.getContext(), MainActivity.class);
+        //TextView textView = (TextView) findViewById(R.id.text_choosed_person);
+        //intent.putExtra("person",textView.getText());
+        startActivity(intent);
     }
 
     class SubmachineAdapter extends ArrayAdapter<String> {

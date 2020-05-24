@@ -447,6 +447,7 @@ public final class BarcodeCaptureActivity extends Activity implements BarcodeGra
         Intent data = new Intent();
         data.putExtra(BarcodeObject, barcode);
         data.putExtra("positionClick", positionClick);
+        checkedSubmachine[positionClick] = true;
         data.putExtra("checkedSubmachine", checkedSubmachine);
         setResult(CommonStatusCodes.SUCCESS, data);
         finish();

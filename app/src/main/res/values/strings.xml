@@ -17,6 +17,7 @@
     <string name="Lines">"Линии: "</string>
     <string name="text_header_lines">Выберете линию:</string>
     <string name="text_header_submachines">Выберете машину</string>
+    <string name="button_finish">Занести данные в базу</string>
 
     // Employees array
     <string-array name="Employees">
