@@ -37,6 +37,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -70,6 +71,8 @@ public final class BarcodeCaptureActivity extends Activity implements BarcodeGra
     public static final String AutoFocus = "AutoFocus";
     public static final String UseFlash = "UseFlash";
     public static final String BarcodeObject = "Barcode";
+    public static Integer positionClick;
+    public static boolean[] checkedSubmachine;
 
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
@@ -93,6 +96,11 @@ public final class BarcodeCaptureActivity extends Activity implements BarcodeGra
         // read parameters from the intent used to launch the activity.
         boolean autoFocus = getIntent().getBooleanExtra(AutoFocus, false);
         boolean useFlash = getIntent().getBooleanExtra(UseFlash, false);
+        positionClick = getIntent().getIntExtra("positionClick", -1);
+        checkedSubmachine = getIntent().getBooleanArrayExtra("checkedSubmachine");
+
+        TextView textView = (TextView) findViewById((R.id.position));
+        textView.setText(Integer.toString(positionClick));
 
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
@@ -438,6 +446,8 @@ public final class BarcodeCaptureActivity extends Activity implements BarcodeGra
 
         Intent data = new Intent();
         data.putExtra(BarcodeObject, barcode);
+        data.putExtra("positionClick", positionClick);
+        data.putExtra("checkedSubmachine", checkedSubmachine);
         setResult(CommonStatusCodes.SUCCESS, data);
         finish();
     }

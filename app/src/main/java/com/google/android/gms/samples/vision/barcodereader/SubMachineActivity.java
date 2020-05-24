@@ -28,12 +28,15 @@ public class SubMachineActivity extends Activity {
     DataBaseHelper dataBaseHelper;
     SQLiteDatabase db;
     private DatabaseAdapterEmployee adapter = new DatabaseAdapterEmployee(this);
+    private int positionClick = -1;
+    private boolean[] checkedSubmachine;
 
     private CompoundButton autoFocus;
     private CompoundButton useFlash;
     private TextView barcodeValue;
     private static final int RC_BARCODE_CAPTURE = 9001;
     String[] data;
+    Barcode barcode = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class SubMachineActivity extends Activity {
         adapter.open();
         //Log.d(TAG, "test1");
         data = new String[adapter.getSubmachine(line).size()];
+        checkedSubmachine = new boolean[adapter.getSubmachine(line).size()];
         adapter.getSubmachine(line).toArray(data);
 
         //insert to listView
@@ -81,6 +85,9 @@ public class SubMachineActivity extends Activity {
                 Intent intent = new Intent(view.getContext(), BarcodeCaptureActivity.class);
                 intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
                 intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
+                intent.putExtra("positionClick", position);
+                checkedSubmachine[position] = true;
+                intent.putExtra("checkedSubmachine", checkedSubmachine);
 
                 startActivityForResult(intent, RC_BARCODE_CAPTURE);
             }
@@ -114,17 +121,21 @@ public class SubMachineActivity extends Activity {
         if (requestCode == RC_BARCODE_CAPTURE) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
-                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-                    //statusMessage.setText(R.string.barcode_success);
+                    barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     barcodeValue.setText(barcode.displayValue);
+                    positionClick = data.getIntExtra("positionClick", -1);
+                    checkedSubmachine = data.getBooleanArrayExtra("checkedSubmachine");
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
+
+                    //insert to listView
+                    ListView sumachinesList = (ListView) findViewById(R.id.list_submachines);
+                    sumachinesList.setAdapter(new SubmachineAdapter(this, R.layout.list_item, this.data));
+
                 } else {
-                    //statusMessage.setText(R.string.barcode_failure);
                     Log.d(TAG, "No barcode captured, intent data is null");
                 }
             } else {
-                //statusMessage.setText(String.format(getString(R.string.barcode_error),
-                        //CommonStatusCodes.getStatusCodeString(resultCode)));
+
             }
         }
         else {
@@ -146,11 +157,11 @@ public class SubMachineActivity extends Activity {
             TextView label = (TextView) row.findViewById(R.id.text_view_submachine_item);
             label.setText(data[position]);
             ImageView iconImageView = (ImageView) row.findViewById(R.id.image_view_icon);
-            // Если текст содержит кота, то выводим значок Льва (лев - это кот!)
-            if (position == 1){         //(data[position].equalsIgnoreCase("Лев")) {
-                iconImageView.setImageResource(R.drawable.icon_no);
-            } else {
+            //
+            if (checkedSubmachine[position] == true){
                 iconImageView.setImageResource(R.drawable.icon_yes);
+            } else {
+                iconImageView.setImageResource(R.drawable.icon_no);
             }
             return row;
         }
