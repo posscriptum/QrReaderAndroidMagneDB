@@ -1,13 +1,16 @@
 package com.google.android.gms.samples.vision.barcodereader;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Layout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +27,8 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
 public class SubMachineActivity extends Activity {
+
+    LinearLayout llMain;
 
     private static final String TAG = "SubMachineActivity: ";
     //database definition
@@ -44,7 +50,7 @@ public class SubMachineActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_machine);
 
-        barcodeValue = (TextView)findViewById(R.id.barcode_value_sub);
+        barcodeValue = (TextView)findViewById(R.id.comments);
         autoFocus = (CompoundButton) findViewById(R.id.auto_focus_sub);
         useFlash = (CompoundButton) findViewById(R.id.use_flash_sub);
 
@@ -93,6 +99,22 @@ public class SubMachineActivity extends Activity {
                 startActivityForResult(intent, RC_BARCODE_CAPTURE);
             }
         });
+
+        // add buttons with tags
+        llMain = (LinearLayout) findViewById(R.id.llMain);
+        int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
+        LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(wrapContent, wrapContent);
+        int btnGravity = Gravity.LEFT;
+        
+        lParams.gravity = btnGravity;
+
+        Button btnNew = new Button(this);
+        btnNew.setText("teg 1");
+        llMain.addView(btnNew, lParams);
+
+        Button btnNew1 = new Button(this);
+        btnNew1.setText("teg 2");
+        llMain.addView(btnNew1, lParams);
     }
 
     /**
