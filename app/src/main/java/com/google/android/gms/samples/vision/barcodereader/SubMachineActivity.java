@@ -5,9 +5,11 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -26,9 +29,16 @@ import android.widget.TextView;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
+import java.util.List;
+
 public class SubMachineActivity extends Activity {
 
     LinearLayout llMain;
+    LinearLayout lineTags1;
+    LinearLayout lineTags2;
+    LinearLayout lineTags3;
+    LinearLayout lineTags4;
+    LinearLayout lineTags5;
 
     private static final String TAG = "SubMachineActivity: ";
     //database definition
@@ -45,6 +55,7 @@ public class SubMachineActivity extends Activity {
     String[] data;
     Barcode barcode = null;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,20 +112,49 @@ public class SubMachineActivity extends Activity {
         });
 
         // add buttons with tags
-        llMain = (LinearLayout) findViewById(R.id.llMain);
+        lineTags1 = (LinearLayout) findViewById(R.id.line1);
+        lineTags2 = (LinearLayout) findViewById(R.id.line2);
+        lineTags3 = (LinearLayout) findViewById(R.id.line3);
+        lineTags4 = (LinearLayout) findViewById(R.id.line4);
+        lineTags5 = (LinearLayout) findViewById(R.id.line5);
+        LinearLayout[] lines = new LinearLayout[]{lineTags1, lineTags2, lineTags3, lineTags4, lineTags5};
         int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(wrapContent, wrapContent);
-        int btnGravity = Gravity.LEFT;
-        
-        lParams.gravity = btnGravity;
+        //int btnGravity = Gravity.LEFT;
+        //lParams.gravity = btnGravity;
 
-        Button btnNew = new Button(this);
-        btnNew.setText("teg 1");
-        llMain.addView(btnNew, lParams);
+        //get tags from resources
+        String[] Tags = this.getResources().getStringArray(R.array.tags);
+        Button[] buttons = new Button[Tags.length];
 
-        Button btnNew1 = new Button(this);
-        btnNew1.setText("teg 2");
-        llMain.addView(btnNew1, lParams);
+        //listener to buttons with tags
+        final EditText editText = (EditText) findViewById(R.id.comments);
+        View.OnClickListener oclBtn = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Меняем текст в TextView (tvOut)
+                String str = editText.getText().toString();
+                if (str != ""){str += " ";}
+                editText.setText(str + ((Button)v).getText());
+            }
+        };
+
+        //create buttons with tags
+        int currentTagindex = 0;
+        for(int l = 1; l <= 5; l++){
+            LinearLayout currentLine = lines[l-1];
+            for(int r = 1; r <= 3; r++){
+                if(currentTagindex < Tags.length)    {
+                    Button btnNew = new Button(this);
+                    btnNew.generateViewId();
+                    btnNew.setText(Tags[currentTagindex]);
+                    currentLine.addView(btnNew, lParams);
+                    buttons[currentTagindex] = btnNew;
+                    btnNew.setOnClickListener(oclBtn);
+                    currentTagindex++;
+                }
+            }
+        }
     }
 
     /**

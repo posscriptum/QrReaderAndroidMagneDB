@@ -40,13 +40,24 @@
 
     // Lines array
     <string-array name="Lines">
-        <item>TDM1000 Пресс1</item>
-        <item>TDM1000 Пресс2</item>
-        <item>TDM1000 Пресс3</item>
-        <item>TDM1000 Пресс4</item>
-        <item>TDM800 Пресс1</item>
-        <item>TDM800 Пресс2</item>
-        <item>TDM800 Пресс3</item>
-        <item>TDM800 Пресс4</item>
+        <item>TD1000@Пресс 1. Точка проверки 1.@Без комментариев</item>
+        <item>TD1000@Пресс 1. Точка проверки 2.@Без комментариев</item>
+        <item>TD1000@Пресс 2. Точка проверки 1@Без комментариев</item>
+        <item>TD1000@Пресс 3. Точка проверки 1.@Без комментариев</item>
+        <item>TD1000@Пресс 3. Точка проверки 2.@Без комментариев</item>
+        <item>TD1000@Пресс 4. Точка проверки 1.@Без комментариев</item>
+        <item>TD800@Пресс 1@Без комментариев</item>
+        <item>TD800@Пресс 1@Без комментариев</item>
+        <item>TD800@Пресс 1@Без комментариев</item>
+        <item>TD800@Пресс 1@Без комментариев</item>
+    </string-array>
+
+    //Tags array
+    <string-array name="tags">
+        <item>teg 1</item>
+        <item>teg 2</item>
+        <item>teg 3</item>
+        <item>Долить масло</item>
+        <item>Все Ок</item>
     </string-array>
 </resources>

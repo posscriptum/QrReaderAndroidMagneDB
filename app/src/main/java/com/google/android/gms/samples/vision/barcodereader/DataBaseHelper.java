@@ -12,7 +12,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DataBaseHelper";
     private Context context;
 
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "QrReaderDB";
     public static final String EMPLOYEE = "Employee";
     public static final String SHIFT = "Shift";
@@ -104,13 +104,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         String[] Lines = context.getResources().getStringArray(R.array.Lines);
         for (String str: Lines) {
-            String[] onSplit = str.split(" ");
+            String[] onSplit = str.split("@");
 
             //insert content lines to db table employee
             ContentValues newValues = new ContentValues();
             newValues.put(KEY_LINE_NAME, onSplit[0]);
             newValues.put(KEY_SUBMASHINE, onSplit[1]);
-            newValues.put(KEY_COMMENTS, "no comment yet");
+            newValues.put(KEY_COMMENTS, onSplit[2]);
             db.insert(LINE, null, newValues);
         }
     }
