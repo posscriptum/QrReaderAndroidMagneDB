@@ -17,7 +17,8 @@
     <string name="Lines">"Линии: "</string>
     <string name="text_header_lines">Выберете линию:</string>
     <string name="text_header_submachines">Выберете машину</string>
-    <string name="button_finish">Занести данные в базу</string>
+    <string name="button_finish">Вернуться в начало</string>
+    <string name="button_insert_data_to_db">Записать точку проверки в базу</string>
 
     // Employees array
     <string-array name="Employees">
@@ -47,9 +48,9 @@
         <item>TD1000@Пресс 3. Точка проверки 2.@Без комментариев</item>
         <item>TD1000@Пресс 4. Точка проверки 1.@Без комментариев</item>
         <item>TD800@Пресс 1@Без комментариев</item>
-        <item>TD800@Пресс 1@Без комментариев</item>
-        <item>TD800@Пресс 1@Без комментариев</item>
-        <item>TD800@Пресс 1@Без комментариев</item>
+        <item>TD800@Пресс 2@Без комментариев</item>
+        <item>TD800@Пресс 3@Без комментариев</item>
+        <item>TD800@Пресс 4@Без комментариев</item>
     </string-array>
 
     //Tags array

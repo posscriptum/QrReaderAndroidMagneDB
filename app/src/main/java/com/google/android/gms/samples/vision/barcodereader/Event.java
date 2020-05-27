@@ -14,9 +14,11 @@ public class Event {
     private String eventComment;
     private String photo;
 
-    public Event (int id, Date data, Time time, int shiftId, int employeeId, int checkpointId, boolean checked, String eventComment, String photo){
-        this.id = id;
-        this.data = data;
+    public Event(){ }
+
+    public Event  (Date date, Time time, int shiftId, int employeeId, int checkpointId, boolean checked, String eventComment, String photo){
+        //this.id = id;
+        this.data = date;
         this.time = time;
         this.shiftId = shiftId;
         this.employeeId = employeeId;

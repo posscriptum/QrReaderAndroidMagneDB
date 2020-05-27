@@ -29,7 +29,11 @@ import android.widget.TextView;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SubMachineActivity extends Activity {
 
@@ -39,6 +43,8 @@ public class SubMachineActivity extends Activity {
     LinearLayout lineTags3;
     LinearLayout lineTags4;
     LinearLayout lineTags5;
+
+    boolean btnSaveToDbClk;
 
     private static final String TAG = "SubMachineActivity: ";
     //database definition
@@ -61,10 +67,17 @@ public class SubMachineActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_machine);
 
+        btnSaveToDbClk = true;
+
+        //create new event
+        Event event = new Event();
+
+        //get links on view
         barcodeValue = (TextView)findViewById(R.id.comments);
         autoFocus = (CompoundButton) findViewById(R.id.auto_focus_sub);
         useFlash = (CompoundButton) findViewById(R.id.use_flash_sub);
 
+        //check autofocus
         autoFocus.setChecked(true);
 
         TextView textViewPerson = (TextView) findViewById(R.id.text_choosed_person);
@@ -77,37 +90,37 @@ public class SubMachineActivity extends Activity {
         String line = intent.getStringExtra("line");
         textViewLine.setText(line);
 
+        //start working with DB
         dataBaseHelper = new DataBaseHelper(this);
         Log.d(TAG, "created DataBaseHelper");
 
         //get data from DB
         adapter.open();
-        //Log.d(TAG, "test1");
         data = new String[adapter.getSubmachine(line).size()];
         checkedSubmachine = new boolean[adapter.getSubmachine(line).size()];
         adapter.getSubmachine(line).toArray(data);
 
         //insert to listView
         ListView sumachinesList = (ListView) findViewById(R.id.list_submachines);
-
-        //sumachinesList.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, R.id.text_view_submachine_item, data));
         sumachinesList.setAdapter(new SubmachineAdapter(this, R.layout.list_item, data));
 
+        //close DB
         adapter.close();
 
         //click on list
         sumachinesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                if(btnSaveToDbClk){
+                    Intent intent = new Intent(view.getContext(), BarcodeCaptureActivity.class);
+                    intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
+                    intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
+                    intent.putExtra("positionClick", position);
+                    //checkedSubmachine[position] = true;
+                    intent.putExtra("checkedSubmachine", checkedSubmachine);
 
-                Intent intent = new Intent(view.getContext(), BarcodeCaptureActivity.class);
-                intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
-                intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
-                intent.putExtra("positionClick", position);
-                //checkedSubmachine[position] = true;
-                intent.putExtra("checkedSubmachine", checkedSubmachine);
-
-                startActivityForResult(intent, RC_BARCODE_CAPTURE);
+                    startActivityForResult(intent, RC_BARCODE_CAPTURE);
+                }
             }
         });
 
@@ -139,7 +152,7 @@ public class SubMachineActivity extends Activity {
             }
         };
 
-        //create buttons with tags
+        //program create buttons with tags
         int currentTagindex = 0;
         for(int l = 1; l <= 5; l++){
             LinearLayout currentLine = lines[l-1];
@@ -181,6 +194,7 @@ public class SubMachineActivity extends Activity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == RC_BARCODE_CAPTURE) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
@@ -190,16 +204,16 @@ public class SubMachineActivity extends Activity {
                     checkedSubmachine = data.getBooleanArrayExtra("checkedSubmachine");
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
 
+                    Button btnSaveToDb = (Button) findViewById(R.id.button_insert_data_to_db);
+                    btnSaveToDb.setVisibility(View.VISIBLE);
+
                     //insert to listView
                     ListView sumachinesList = (ListView) findViewById(R.id.list_submachines);
                     sumachinesList.setAdapter(new SubmachineAdapter(this, R.layout.list_item, this.data));
-                    if(checkFinishWork(checkedSubmachine)){
-                        Button buttonFinish = (Button) findViewById(R.id.button_finish);
-                        buttonFinish.setVisibility(View.VISIBLE);
-                    }
 
+                    btnSaveToDbClk = false;
                 } else {
-                    Log.d(TAG, "No barcode captured, intent data is null");
+                    //Log.d(TAG, "No barcode captured, intent data is null");
                 }
             } else {
 
@@ -210,6 +224,7 @@ public class SubMachineActivity extends Activity {
         }
     }
 
+    //check then all items on listview was check
     private boolean checkFinishWork(boolean[] checkedSubmachine) {
         boolean result = true;
         for(boolean bool: checkedSubmachine){
@@ -218,6 +233,7 @@ public class SubMachineActivity extends Activity {
         return  result;
     }
 
+    //click button for going back to the main activity
     public void goToMainActivity(View view) {
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         //TextView textView = (TextView) findViewById(R.id.text_choosed_person);
@@ -225,6 +241,29 @@ public class SubMachineActivity extends Activity {
         startActivity(intent);
     }
 
+    //click button for save data to db
+    public void saveEventToDB(View view){
+
+        // Текущее время
+        Date currentDate = new Date();
+        // Форматирование времени как "день.месяц.год"
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        String dateText = dateFormat.format(currentDate);
+        // Форматирование времени как "часы:минуты:секунды"
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        String timeText = timeFormat.format(currentDate);
+
+        //Event event = new Event(currentDate, )
+        btnSaveToDbClk = true;
+        Button btnSaveToDb = (Button) findViewById(R.id.button_insert_data_to_db);
+        if(checkFinishWork(checkedSubmachine)){
+            btnSaveToDb.setVisibility(View.INVISIBLE);
+            Button buttonFinish = (Button) findViewById(R.id.button_finish);
+            buttonFinish.setVisibility(View.VISIBLE);
+        }
+    }
+
+    //custom adapter for listview (add red and green icons)
     class SubmachineAdapter extends ArrayAdapter<String> {
 
         public SubmachineAdapter(@NonNull Context context, int resource, @NonNull String[] objects) {
