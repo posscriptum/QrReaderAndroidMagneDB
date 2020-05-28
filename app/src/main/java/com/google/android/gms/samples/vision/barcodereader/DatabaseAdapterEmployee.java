@@ -36,6 +36,15 @@ public class DatabaseAdapterEmployee {
         return  database.query(DataBaseHelper.EMPLOYEE, columns, null, null, null, null, null);
     }
 
+    public int getIdUser(String userName){
+        String[] userNames = userName.split(" ");
+        String[] columns = new String[] {DataBaseHelper.KEY_WORKER_ID};
+        Cursor cursor = database.query(DataBaseHelper.EMPLOYEE, columns, DataBaseHelper.KEY_FIRST_NAME_EMPLOYEE + " = ? AND " + DataBaseHelper.KEY_SECOND_NAME_EMPLOYEE + " = ? AND " + DataBaseHelper.KEY_THIRD_NAME_EMPLOYEE + " = ?", new String[] {userNames[0],userNames[1],userNames[2]}, null, null, null);;
+        cursor.moveToFirst();
+        String id = cursor.getString(cursor.getColumnIndex(DataBaseHelper.KEY_WORKER_ID));
+        return Integer.getInteger(id);
+    }
+
     public List<String> getUsers(){
         ArrayList<String> users = new ArrayList<>();
         Cursor cursor = getAllUsers();

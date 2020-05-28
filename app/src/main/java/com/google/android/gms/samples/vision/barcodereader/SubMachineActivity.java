@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,6 +61,8 @@ public class SubMachineActivity extends Activity {
     private static final int RC_BARCODE_CAPTURE = 9001;
     String[] data;
     Barcode barcode = null;
+    String person;
+    String line;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -85,9 +88,9 @@ public class SubMachineActivity extends Activity {
 
         //fill textView from intent
         Intent intent = getIntent();
-        String person = intent.getStringExtra("person");
+        person = intent.getStringExtra("person");
         textViewPerson.setText(person);
-        String line = intent.getStringExtra("line");
+        line = intent.getStringExtra("line");
         textViewLine.setText(line);
 
         //start working with DB
@@ -243,17 +246,15 @@ public class SubMachineActivity extends Activity {
 
     //click button for save data to db
     public void saveEventToDB(View view){
+        //create new event
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String currentTime = sdf.format(new Date());
+        EditText textView = (EditText) findViewById(R.id.comments);
+        adapter.open();
+        Event event = new Event(currentTime, 0, adapter.getIdUser(person), 0, true, textView.getText().toString(), "not link");
+        adapter.close();
 
-        // Текущее время
-        Date currentDate = new Date();
-        // Форматирование времени как "день.месяц.год"
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-        String dateText = dateFormat.format(currentDate);
-        // Форматирование времени как "часы:минуты:секунды"
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        String timeText = timeFormat.format(currentDate);
-
-        //Event event = new Event(currentDate, )
+        //button logic
         btnSaveToDbClk = true;
         Button btnSaveToDb = (Button) findViewById(R.id.button_insert_data_to_db);
         if(checkFinishWork(checkedSubmachine)){

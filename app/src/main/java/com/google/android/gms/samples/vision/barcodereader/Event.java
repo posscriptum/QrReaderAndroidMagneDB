@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class Event {
     private int id;
-    private Date data;
-    private Time time;
+    private String data;
+    private String time;
     private int shiftId;
     private int employeeId;
     private int checkpointId;
@@ -16,9 +16,9 @@ public class Event {
 
     public Event(){ }
 
-    public Event  (Date date, Time time, int shiftId, int employeeId, int checkpointId, boolean checked, String eventComment, String photo){
+    public Event  (String time, int shiftId, int employeeId, int checkpointId, boolean checked, String eventComment, String photo){
         //this.id = id;
-        this.data = date;
+        this.data = new Date().toString();
         this.time = time;
         this.shiftId = shiftId;
         this.employeeId = employeeId;
@@ -52,11 +52,11 @@ public class Event {
         this.shiftId = shiftId;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

@@ -88,12 +88,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Log.d(TAG, "finish fill db");
     }
 
+    //insert content employee to db table employee
     private void fillDatabase(SQLiteDatabase db) {
         String[] Employees = context.getResources().getStringArray(R.array.Employees);
         for (String str: Employees) {
             String[] onSplit = str.split(" ");
 
-            //insert content employee to db table employee
             ContentValues newValues = new ContentValues();
             newValues.put(KEY_WORKER_ID, onSplit[0]);
             newValues.put(KEY_FIRST_NAME_EMPLOYEE, onSplit[1]);
@@ -102,17 +102,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             db.insert(EMPLOYEE, null, newValues);
         }
 
+        //insert content lines to db table line
         String[] Lines = context.getResources().getStringArray(R.array.Lines);
         for (String str: Lines) {
             String[] onSplit = str.split("@");
 
-            //insert content lines to db table employee
             ContentValues newValues = new ContentValues();
             newValues.put(KEY_LINE_NAME, onSplit[0]);
             newValues.put(KEY_SUBMASHINE, onSplit[1]);
             newValues.put(KEY_COMMENTS, onSplit[2]);
             db.insert(LINE, null, newValues);
         }
+
+        //insert shift name to db table shift
+        String[] shifts = context.getResources().getStringArray(R.array.shifts);
+        for (String str: shifts) {
+            ContentValues newValues = new ContentValues();
+            newValues.put(KEY_LINE_NAME, str);
+            db.insert(SHIFT, null, newValues);
+        }
+
+
     }
 
     @Override

@@ -39,7 +39,7 @@
         <item>98475 Сидоров Сидор Сидорович</item>
     </string-array>
 
-    // Lines array
+    // Line's checkpoints array
     <string-array name="Lines">
         <item>TD1000@Пресс 1. Точка проверки 1.@Без комментариев</item>
         <item>TD1000@Пресс 1. Точка проверки 2.@Без комментариев</item>
@@ -60,5 +60,13 @@
         <item>teg 3</item>
         <item>Долить масло</item>
         <item>Все Ок</item>
+    </string-array>
+
+    //Shift name array
+    <string-array name="shifts">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
     </string-array>
 </resources>
